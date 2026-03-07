@@ -36,18 +36,17 @@ The project covers the full data mining pipeline:
 
 | Feature | Type | Description |
 |---|---|---|
-| `age` | Continuous | Patient age in years — the strongest single predictor |
-| `avg_glucose_level` | Continuous | Average blood glucose; elevated levels signal diabetes risk |
-| `bmi` | Continuous | Body mass index; 201 values imputed via KNN |
-| `hypertension` | Binary | History of hypertension (~3× increased stroke rate) |
-| `heart_disease` | Binary | History of heart disease (~3.8× increased stroke rate) |
+| `age` | Continuous | Patient age in years |
+| `avg_glucose_level` | Continuous | Average blood glucose |
+| `bmi` | Continuous | 201 values imputed via KNN |
+| `hypertension` | Binary | History of hypertension |
+| `heart_disease` | Binary | History of heart disease |
 | `ever_married` | Binary | Acts largely as a proxy for age |
 | `gender` | Categorical | Male / Female |
 | `work_type` | Categorical | Private, Self-employed, Govt, Never worked, Children |
 | `Residence_type` | Categorical | Urban / Rural |
 | `smoking_status` | Categorical | Never smoked, Formerly smoked, Smokes, Unknown |
 
-> [!NOTE]
 > The dataset is heavily imbalanced (roughly 1:19). A naive classifier that always predicts "no stroke" would achieve 95% accuracy while being completely useless clinically.
 
 ---
@@ -58,8 +57,8 @@ The project covers the full data mining pipeline:
 
 - **Cleaning** — Removed the non-representative `Other` gender record and the uninformative `id` column. Applied domain logic to children: any patient under 10 with `smoking_status = Unknown` was corrected to `never smoked` (472 records).
 - **Missing value imputation** — 201 missing BMI values were filled using a 10-nearest-neighbour imputer trained on age and glucose level.
-- **Encoding** — Binary features mapped to 0/1; multi-category features one-hot encoded with `drop_first=True`.
-- **Train / test split** — Stratified 70/30 split to preserve the stroke ratio in both sets.
+- **Encoding** — Binary features mapped to 0/1; multi-category features one-hot encoded.
+- **Train / test split** —  70/30 split.
 - **Class imbalance** — SMOTE (Synthetic Minority Oversampling Technique) applied **to the training set only**, producing a balanced 1:1 split (3,888 vs 3,888). The test set remains at real-world distribution.
 - **Scaling** — StandardScaler applied for Logistic Regression and the Neural Network. Tree-based models (Random Forest, XGBoost) use the unscaled data.
 
@@ -78,7 +77,6 @@ All models are evaluated at a threshold of **0.20–0.25** rather than the defau
 | XGBoost | 0.800 | 0.801 | 0.097 |
 | Neural Network (ANN) | **0.900** | 0.791 | 0.081 |
 
-> [!TIP]
 > The Neural Network catches **90% of actual stroke cases** in the test set. The trade-off is that for every genuine stroke caught, roughly 11 healthy patients are also flagged — acceptable for a first-line screening tool that feeds into clinical review.
 
 **Recommended models for this application:** Neural Network and Random Forest — both achieve recall ≥ 0.86 and ROC-AUC ≥ 0.79.
@@ -103,21 +101,19 @@ The clustering naturally separated high-risk elderly patients from low-risk youn
 ## Key Findings
 
 - **Age is the dominant predictor.** Stroke risk accelerates sharply after 60 regardless of other factors.
-- **Hypertension and heart disease multiply risk significantly** — roughly 3× and 3.8× respectively — and operate through independent vascular mechanisms.
-- **Glucose level matters, BMI less so.** Glucose is a strong secondary predictor; BMI is most useful in combination with other features.
-- **SMOTE + threshold tuning work.** Recall improved from ~5% (naive baseline) to 64–90% across models.
+- **Hypertension and heart disease multiply risk significantly**.
+- **Glucose level matters, BMI less so.** Glucose is a strong secondary predictor, BMI is most useful in combination with other features.
 - **Clustering validates supervised results.** K-Means independently recovered the same risk stratification the labelled models learned, lending confidence to the feature importance findings.
 
-> [!IMPORTANT]
 > This project is a **screening tool**, not a diagnostic instrument. Its outputs should trigger clinical follow-up and never replace physician judgement.
 
 ---
 
 ## Limitations
 
-- **Low precision (~7–12%)** means substantial false positives. Acceptable for screening, but would require improvement before any real-world deployment.
+- **Low precision** means substantial false positives. Acceptable for screening, but would require improvement before any real-world deployment.
 - **Small dataset** — only 249 positive cases. Models would benefit significantly from additional real-world stroke records.
-- **Static snapshot** — patient records represent a single point in time; longitudinal data would likely improve predictive power.
+- **Static snapshot** — patient records represent a single point in time, longitudinal data would likely improve predictive power.
 
 ---
 
@@ -130,7 +126,6 @@ The clustering naturally separated high-risk elderly patients from low-risk youn
 | Machine learning | `scikit-learn`, `xgboost` |
 | Deep learning | `tensorflow` / `keras` |
 | Imbalanced data | `imbalanced-learn` (SMOTE) |
-| Explainability | `shap` |
 | Statistics | `scipy` |
 
 ---
@@ -151,7 +146,7 @@ pip install numpy pandas matplotlib seaborn scikit-learn xgboost tensorflow imba
 ### Running the notebook
 
 ```bash
-jupyter notebook stroke_project.ipynb
+jupyter notebook stroke-risk-prediction.ipynb
 ```
 
 Run all cells in order. The notebook is self-contained and will download no external resources — just provide the `healthcare-dataset-stroke-data.csv` file in the same directory.
@@ -162,6 +157,6 @@ Run all cells in order. The notebook is self-contained and will download no exte
 
 ```
 .
-├── stroke_project.ipynb      # Full analysis notebook
+├── stroke-risk-prediction.ipynb      # Full analysis notebook
 └── healthcare-dataset-stroke-data.csv  # Patient dataset (required)
 ```
