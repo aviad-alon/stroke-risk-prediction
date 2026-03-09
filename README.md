@@ -64,7 +64,7 @@ The project covers the full data mining pipeline:
 
 ### Decision Threshold
 
-All models are evaluated at a threshold of **0.20–0.25** rather than the default 0.5. This deliberately increases recall (fewer missed strokes) at the cost of lower precision (more false alarms). For a population-level screening tool, this trade-off is the correct one.
+All models are evaluated at a threshold of **0.20-0.25** rather than the default 0.5. This deliberately increases recall (fewer missed strokes) at the cost of lower precision (more false alarms). For a population-level screening tool, this trade-off is the correct one.
 
 ---
 
@@ -77,7 +77,7 @@ All models are evaluated at a threshold of **0.20–0.25** rather than the defau
 | XGBoost | 0.800 | 0.801 | 0.097 |
 | Neural Network (ANN) | **0.900** | 0.791 | 0.081 |
 
-> The Neural Network catches **90% of actual stroke cases** in the test set. The trade-off is that for every genuine stroke caught, roughly 11 healthy patients are also flagged — acceptable for a first-line screening tool that feeds into clinical review.
+> The Neural Network catches **90% of actual stroke cases** in the test set. The trade-off is that for every genuine stroke caught, roughly 11 healthy patients are also flagged - acceptable for a first-line screening tool that feeds into clinical review.
 
 **Recommended models for this application:** Neural Network and Random Forest — both achieve recall ≥ 0.86 and ROC-AUC ≥ 0.79.
 
@@ -89,10 +89,10 @@ Unsupervised K-Means clustering (K = 7, selected via elbow method and silhouette
 
 | Cluster | Stroke Cases | Profile |
 |---|---|---|
-| 6 | 51 | Elderly, highest hypertension & heart disease — **maximum clinical risk** |
-| 2 | 41 | Oldest demographic — age as an independent risk driver |
+| 6 | 51 | Elderly, highest hypertension & heart disease - **maximum clinical risk** |
+| 2 | 41 | Oldest demographic - age as an independent risk driver |
 | 0 | 48 | Middle-aged with significant hypertension |
-| 1 | 3 | Youngest, zero comorbidities — **healthy benchmark** |
+| 1 | 3 | Youngest, zero comorbidities - **healthy benchmark** |
 
 The clustering naturally separated high-risk elderly patients from low-risk young ones without ever seeing the stroke labels, confirming that age, hypertension, and heart disease are the true drivers of risk.
 
@@ -112,8 +112,8 @@ The clustering naturally separated high-risk elderly patients from low-risk youn
 ## Limitations
 
 - **Low precision** means substantial false positives. Acceptable for screening, but would require improvement before any real-world deployment.
-- **Small dataset** — only 249 positive cases. Models would benefit significantly from additional real-world stroke records.
-- **Static snapshot** — patient records represent a single point in time, longitudinal data would likely improve predictive power.
+- **Small dataset** - only 249 positive cases. Models would benefit significantly from additional real-world stroke records.
+- **Static snapshot** - patient records represent a single point in time, longitudinal data would likely improve predictive power.
 
 ---
 
