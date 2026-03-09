@@ -4,7 +4,7 @@
 
 Stroke is one of the leading causes of death and long-term disability worldwide, yet it often strikes without warning. This project uses a real clinical dataset to answer a practical question: given a patient's basic medical profile, can we reliably identify who is most at risk?
 
-The core challenge is not simply achieving high accuracy — it is **catching as many real stroke cases as possible**, even at the cost of raising false alarms. In a clinical screening context, missing a high-risk patient is far worse than sending a healthy patient for an unnecessary follow-up. This principle shapes every modelling decision made in this project.
+The core challenge is not simply achieving high accuracy - it is **catching as many real stroke cases as possible**, even at the cost of raising false alarms. In a clinical screening context, missing a high-risk patient is far worse than sending a healthy patient for an unnecessary follow-up. This principle shapes every modelling decision made in this project.
 
 ---
 
@@ -14,11 +14,11 @@ The dataset contains **5,110 patient records** with features spanning demographi
 
 The project covers the full data mining pipeline:
 
-1. **Exploratory Data Analysis** — understanding the data before touching it
-2. **Preprocessing** — cleaning, imputing, encoding, and balancing
-3. **Model Training** — Logistic Regression, Random Forest, XGBoost, Neural Network
-4. **Evaluation** — recall-first metrics with a custom decision threshold
-5. **Clustering** — discovering natural risk groups without labels
+1. **Exploratory Data Analysis** - understanding the data before touching it
+2. **Preprocessing** - cleaning, imputing, encoding, and balancing
+3. **Model Training** - Logistic Regression, Random Forest, XGBoost, Neural Network
+4. **Evaluation** - recall-first metrics with a custom decision threshold
+5. **Clustering** - discovering natural risk groups without labels
 
 ---
 
@@ -55,12 +55,12 @@ The project covers the full data mining pipeline:
 
 ### Preprocessing
 
-- **Cleaning** — Removed the non-representative `Other` gender record and the uninformative `id` column. Applied domain logic to children: any patient under 10 with `smoking_status = Unknown` was corrected to `never smoked` (472 records).
-- **Missing value imputation** — 201 missing BMI values were filled using a 10-nearest-neighbour imputer trained on age and glucose level.
-- **Encoding** — Binary features mapped to 0/1; multi-category features one-hot encoded.
-- **Train / test split** —  70/30 split.
-- **Class imbalance** — SMOTE (Synthetic Minority Oversampling Technique) applied **to the training set only**, producing a balanced 1:1 split (3,888 vs 3,888). The test set remains at real-world distribution.
-- **Scaling** — StandardScaler applied for Logistic Regression and the Neural Network. Tree-based models (Random Forest, XGBoost) use the unscaled data.
+- **Cleaning** - Removed the non-representative `Other` gender record and the uninformative `id` column. Applied domain logic to children: any patient under 10 with `smoking_status = Unknown` was corrected to `never smoked` (472 records).
+- **Missing value imputation** - 201 missing BMI values were filled using a 10-nearest-neighbour imputer trained on age and glucose level.
+- **Encoding** - Binary features mapped to 0/1; multi-category features one-hot encoded.
+- **Train / test split** - 70/30 split.
+- **Class imbalance** - SMOTE (Synthetic Minority Oversampling Technique) applied **to the training set only**, producing a balanced 1:1 split (3,888 vs 3,888). The test set remains at real-world distribution.
+- **Scaling** - StandardScaler applied for Logistic Regression and the Neural Network. Tree-based models (Random Forest, XGBoost) use the unscaled data.
 
 ### Decision Threshold
 
